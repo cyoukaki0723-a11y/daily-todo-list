@@ -232,6 +232,67 @@
             transform: scale(1.1);
         }
 
+        /* Sub-items Page Styles */
+        .subitems-page {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .subitems-page.active {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        .subitems-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .subitem {
+            position: absolute;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .subitem-circle {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .subitem:hover .subitem-circle {
+            transform: scale(1.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
         /* Detail Page Styles */
         .detail-page {
             display: none;
@@ -305,6 +366,7 @@
 
         .detail-content {
             flex: 1;
+            overflow-y: auto;
         }
 
         .content-section {
@@ -328,6 +390,25 @@
             background: #f8f9fa;
             border-radius: 8px;
             border-left: 4px solid #667eea;
+            position: relative;
+        }
+
+        .edit-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background: #764ba2;
         }
 
         .item-title {
@@ -385,9 +466,164 @@
             color: #ddd;
         }
 
+        /* Edit Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-header {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 28px;
+            cursor: pointer;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            color: #764ba2;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .save-btn {
+            background: #667eea;
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #764ba2;
+        }
+
+        .cancel-btn {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .cancel-btn:hover {
+            background: #e0e0e0;
+        }
+
+        /* Navigation Bar */
+        .nav-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            color: #667eea;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .nav-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .modules-container {
+            .modules-container,
+            .subitems-container {
                 height: 500px;
                 max-width: 400px;
             }
@@ -433,10 +669,15 @@
             .detail-title {
                 font-size: 24px;
             }
+
+            .modal-content {
+                width: 95%;
+            }
         }
 
         @media (max-width: 480px) {
-            .modules-container {
+            .modules-container,
+            .subitems-container {
                 height: 450px;
             }
 
@@ -514,7 +755,7 @@
 
         <div class="center-info">
             <div class="center-avatar">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23667eea' width='200' height='200'/%3E%3Ctext x='50%' y='50%' font-size='80' fill='white' text-anchor='middle' dy='.3em'%3E👤%3C/text%3E%3C/svg%3E" alt="Profile Picture" class="avatar-img">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23667eea' width='200' height='200'/%3E%3Ctext x='50%25' y='50%25' font-size='80' fill='white' text-anchor='middle' dy='.3em'%3E👤%3C/text%3E%3C/svg%3E" alt="Profile" class="avatar-img">
             </div>
             <h2 class="center-name">Your Name</h2>
             <p class="center-title">Full Stack Developer</p>
@@ -526,303 +767,420 @@
         </div>
     </section>
 
+    <!-- Sub-items Page -->
+    <section class="subitems-page" id="subitemsPage">
+        <div class="nav-bar">
+            <button class="nav-btn" id="backToModulesBtn">←</button>
+        </div>
+        <div class="subitems-container" id="subitemsContainer"></div>
+    </section>
+
     <!-- Detail Page -->
     <section class="detail-page" id="detailPage">
+        <div class="nav-bar">
+            <button class="nav-btn" id="backToSubitemsBtn">←</button>
+        </div>
         <div class="detail-container">
             <div class="detail-header">
-                <button class="back-btn" id="backBtn">←</button>
                 <h2 class="detail-title" id="detailTitle"></h2>
             </div>
             <div class="detail-content" id="detailContent"></div>
         </div>
     </section>
 
+    <!-- Edit Modal -->
+    <div class="modal" id="editModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span>Edit Item</span>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="editForm">
+                <div class="form-group">
+                    <label for="editTitle">Title</label>
+                    <input type="text" id="editTitle" placeholder="Item Title">
+                </div>
+                <div class="form-group">
+                    <label for="editSubtitle">Subtitle</label>
+                    <input type="text" id="editSubtitle" placeholder="Subtitle or Time Period">
+                </div>
+                <div class="form-group">
+                    <label for="editDescription">Description</label>
+                    <textarea id="editDescription" placeholder="Item Description"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="editTags">Skills/Tags (comma separated)</label>
+                    <input type="text" id="editTags" placeholder="e.g., React, Node.js, MongoDB">
+                </div>
+                <div class="modal-buttons">
+                    <button type="submit" class="modal-btn save-btn">Save</button>
+                    <button type="button" class="modal-btn cancel-btn" id="cancelEditBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <script>
-        // Module content data
+        // Module data with subitems
         const moduleData = {
             study: {
                 title: 'Study Experience',
-                content: `
-                    <div class="content-section">
-                        <div class="section-title">Education</div>
-                        <div class="content-item">
-                            <div class="item-title">Bachelor of Science in Computer Science</div>
-                            <div class="item-subtitle">University Name • 2020 - 2024</div>
-                            <div class="item-description">
-                                Focused on web development, database design, and software engineering. 
-                                GPA: 3.8/4.0
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">Relevant Coursework</div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">Data Structures</span>
-                                <span class="skill-tag">Web Development</span>
-                                <span class="skill-tag">Database Design</span>
-                                <span class="skill-tag">Algorithms</span>
-                                <span class="skill-tag">Machine Learning</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-section">
-                        <div class="section-title">Certifications</div>
-                        <div class="content-item">
-                            <div class="item-title">AWS Certified Cloud Practitioner</div>
-                            <div class="item-subtitle">Amazon Web Services • 2023</div>
-                        </div>
-                    </div>
-                `
+                icon: '📚',
+                subitems: [
+                    {
+                        id: 'study-1',
+                        name: 'University of Electronic\nScience and Technology\nof China',
+                        details: {
+                            title: 'Master\'s Degree - UESTC',
+                            subtitle: 'University of Electronic Science and Technology of China',
+                            description: 'Pursuing advanced studies in Computer Science with focus on artificial intelligence and machine learning. Strong foundation in algorithms and system design.',
+                            tags: ['Machine Learning', 'AI', 'Research']
+                        }
+                    },
+                    {
+                        id: 'study-2',
+                        name: 'Nanjing Agricultural\nUniversity',
+                        details: {
+                            title: 'Bachelor\'s Degree - NAU',
+                            subtitle: 'Nanjing Agricultural University',
+                            description: 'Bachelor of Science in Computer Science. Graduated with honors. Focused on software engineering, database design, and web development.',
+                            tags: ['Computer Science', 'Software Engineering', 'GPA: 3.8/4.0']
+                        }
+                    },
+                    {
+                        id: 'study-3',
+                        name: 'Kiyofu University\nExchange Study Abroad',
+                        details: {
+                            title: 'Exchange Program - Kiyofu University',
+                            subtitle: 'Kiyofu University, Japan • 2023',
+                            description: 'One-year exchange study program in Japan. Completed advanced coursework and cultural immersion. Developed cross-cultural communication skills.',
+                            tags: ['International Education', 'Japanese Culture', 'Language Skills']
+                        }
+                    }
+                ]
             },
             internship: {
                 title: 'Internship Experience',
-                content: `
-                    <div class="content-section">
-                        <div class="section-title">Internship History</div>
-                        <div class="content-item">
-                            <div class="item-title">Frontend Development Intern</div>
-                            <div class="item-subtitle">Tech Company Name • Jun 2023 - Aug 2023</div>
-                            <div class="item-description">
-                                Developed and maintained React components, improved UI responsiveness, 
-                                and collaborated with UX designers to implement design specifications.
-                            </div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">React</span>
-                                <span class="skill-tag">CSS</span>
-                                <span class="skill-tag">JavaScript</span>
-                                <span class="skill-tag">Figma</span>
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">Backend Development Intern</div>
-                            <div class="item-subtitle">Another Company • Jan 2023 - Apr 2023</div>
-                            <div class="item-description">
-                                Built REST APIs, optimized database queries, and implemented authentication 
-                                systems using Node.js and MongoDB.
-                            </div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">Node.js</span>
-                                <span class="skill-tag">MongoDB</span>
-                                <span class="skill-tag">Express</span>
-                                <span class="skill-tag">REST API</span>
-                            </div>
-                        </div>
-                    </div>
-                `
+                icon: '💼',
+                subitems: [
+                    {
+                        id: 'internship-1',
+                        name: 'Dige\n(BD in Japan region)',
+                        details: {
+                            title: 'Business Development Intern - Dige',
+                            subtitle: 'Dige • Japan Region',
+                            description: 'Contributed to business development strategies in the Japanese market. Conducted market research and identified partnership opportunities.',
+                            tags: ['Business Development', 'Market Research', 'Japan']
+                        }
+                    },
+                    {
+                        id: 'internship-2',
+                        name: 'Huatai Securities\n(Data Analysis Intern)',
+                        details: {
+                            title: 'Data Analysis Intern - Huatai Securities',
+                            subtitle: 'Huatai Securities • 6 months',
+                            description: 'Analyzed financial data and market trends. Created data visualizations and dashboards for decision-making. Improved data processing efficiency by 40%.',
+                            tags: ['Data Analysis', 'Finance', 'SQL', 'Python', 'Excel']
+                        }
+                    },
+                    {
+                        id: 'internship-3',
+                        name: 'Renxin Education\n(Japanese Teacher)',
+                        details: {
+                            title: 'Japanese Language Instructor - Renxin Education',
+                            subtitle: 'Renxin Education • Part-time',
+                            description: 'Taught Japanese language and culture to students. Developed curriculum and teaching materials. Mentored 30+ students with high satisfaction rates.',
+                            tags: ['Teaching', 'Japanese Language', 'Education', 'Mentoring']
+                        }
+                    }
+                ]
             },
             work: {
                 title: 'Work Experience',
-                content: `
-                    <div class="content-section">
-                        <div class="section-title">Professional Experience</div>
-                        <div class="content-item">
-                            <div class="item-title">Full Stack Developer</div>
-                            <div class="item-subtitle">Current Company • May 2024 - Present</div>
-                            <div class="item-description">
-                                Leading development of scalable web applications, managing team of 3 developers, 
-                                and improving code quality through code reviews and best practices.
-                            </div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">React</span>
-                                <span class="skill-tag">Node.js</span>
-                                <span class="skill-tag">TypeScript</span>
-                                <span class="skill-tag">PostgreSQL</span>
-                                <span class="skill-tag">AWS</span>
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">Junior Developer</div>
-                            <div class="item-subtitle">Previous Company • Dec 2023 - Apr 2024</div>
-                            <div class="item-description">
-                                Developed frontend features for e-commerce platform, fixed bugs, 
-                                and participated in agile development cycles.
-                            </div>
-                        </div>
-                    </div>
-                `
+                icon: '🏢',
+                subitems: [
+                    {
+                        id: 'work-1',
+                        name: 'Full Stack\nDeveloper',
+                        details: {
+                            title: 'Full Stack Developer - Current Role',
+                            subtitle: 'Tech Company • May 2024 - Present',
+                            description: 'Leading development of scalable web applications. Managing a team of 3 developers. Implementing best practices and code reviews. Improved application performance by 35%.',
+                            tags: ['React', 'Node.js', 'TypeScript', 'PostgreSQL', 'AWS']
+                        }
+                    },
+                    {
+                        id: 'work-2',
+                        name: 'Junior\nDeveloper',
+                        details: {
+                            title: 'Junior Developer - Previous Role',
+                            subtitle: 'Previous Company • Dec 2023 - Apr 2024',
+                            description: 'Developed frontend features for e-commerce platform. Fixed bugs and optimized UI components. Participated in agile development cycles and daily standups.',
+                            tags: ['React', 'JavaScript', 'CSS', 'Agile']
+                        }
+                    }
+                ]
             },
             skills: {
                 title: 'Outstanding Skills',
-                content: `
-                    <div class="content-section">
-                        <div class="section-title">Technical Skills</div>
-                        <div class="content-item">
-                            <div class="item-title">Frontend Development</div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">React</span>
-                                <span class="skill-tag">Vue.js</span>
-                                <span class="skill-tag">TypeScript</span>
-                                <span class="skill-tag">CSS/SCSS</span>
-                                <span class="skill-tag">Webpack</span>
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">Backend Development</div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">Node.js</span>
-                                <span class="skill-tag">Python</span>
-                                <span class="skill-tag">PostgreSQL</span>
-                                <span class="skill-tag">MongoDB</span>
-                                <span class="skill-tag">GraphQL</span>
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">DevOps & Tools</div>
-                            <div class="skill-tags">
-                                <span class="skill-tag">Docker</span>
-                                <span class="skill-tag">AWS</span>
-                                <span class="skill-tag">GitHub</span>
-                                <span class="skill-tag">CI/CD</span>
-                                <span class="skill-tag">Linux</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-section">
-                        <div class="section-title">Soft Skills</div>
-                        <div class="content-item">
-                            <div class="item-description">
-                                • Team Leadership & Mentoring<br>
-                                • Problem Solving<br>
-                                • Communication<br>
-                                • Project Management<br>
-                                • Continuous Learning
-                            </div>
-                        </div>
-                    </div>
-                `
+                icon: '⚡',
+                subitems: [
+                    {
+                        id: 'skills-1',
+                        name: 'Frontend\nDevelopment',
+                        details: {
+                            title: 'Frontend Development Skills',
+                            subtitle: 'Web Technologies',
+                            description: 'Expert in modern frontend technologies. Specializing in creating responsive, accessible, and performant user interfaces.',
+                            tags: ['React', 'Vue.js', 'TypeScript', 'CSS/SCSS', 'Webpack', 'Responsive Design']
+                        }
+                    },
+                    {
+                        id: 'skills-2',
+                        name: 'Backend\nDevelopment',
+                        details: {
+                            title: 'Backend Development Skills',
+                            subtitle: 'Server Technologies',
+                            description: 'Strong backend development skills with focus on scalable architecture and database optimization. Experience with both relational and NoSQL databases.',
+                            tags: ['Node.js', 'Python', 'PostgreSQL', 'MongoDB', 'GraphQL', 'REST API']
+                        }
+                    },
+                    {
+                        id: 'skills-3',
+                        name: 'DevOps & Tools',
+                        details: {
+                            title: 'DevOps & Tools',
+                            subtitle: 'Infrastructure & Development Tools',
+                            description: 'Proficient in deployment, containerization, and CI/CD pipelines. Experienced with cloud platforms and development tool ecosystems.',
+                            tags: ['Docker', 'AWS', 'GitHub', 'CI/CD', 'Linux', 'Git']
+                        }
+                    }
+                ]
             },
             mbti: {
                 title: 'MBTI Personality',
-                content: `
-                    <div class="content-section">
-                        <div class="section-title">Personality Type</div>
-                        <div class="content-item">
-                            <div class="item-title">INTJ - The Architect</div>
-                            <div class="item-subtitle">Analytical, Strategic, Independent</div>
-                            <div class="item-description">
-                                INTJs are strategic thinkers who thrive on solving complex problems. 
-                                They are independent, analytical, and focused on long-term goals.
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-section">
-                        <div class="section-title">Key Characteristics</div>
-                        <div class="content-item">
-                            <div class="item-title">Strengths</div>
-                            <div class="item-description">
-                                • Strategic Planning<br>
-                                • Logical Reasoning<br>
-                                • Independent Thinking<br>
-                                • Self-Improvement Focus<br>
-                                • Long-term Vision
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">Growth Areas</div>
-                            <div class="item-description">
-                                • Emotional Expression<br>
-                                • Interpersonal Warmth<br>
-                                • Delegation<br>
-                                • Present Moment Awareness
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-section">
-                        <div class="section-title">Work Style</div>
-                        <div class="content-item">
-                            <div class="item-description">
-                                Prefers autonomous work with clear objectives. Values competence and 
-                                intellectual challenges. Best when given independence to execute strategies 
-                                and control over methodologies.
-                            </div>
-                        </div>
-                    </div>
-                `
+                icon: '🧠',
+                subitems: [
+                    {
+                        id: 'mbti-1',
+                        name: 'INTJ\nThe Architect',
+                        details: {
+                            title: 'INTJ - The Architect Personality',
+                            subtitle: 'Analytical, Strategic, Independent',
+                            description: 'INTJs are strategic thinkers who thrive on solving complex problems. They are independent, analytical, and focused on long-term goals. Excel in leadership and strategic planning.',
+                            tags: ['Strategic Planning', 'Logical Reasoning', 'Leadership', 'Innovation']
+                        }
+                    }
+                ]
             },
             evaluations: {
                 title: 'Evaluations & Feedback',
-                content: `
-                    <div class="content-section">
-                        <div class="section-title">Peer Reviews</div>
-                        <div class="content-item">
-                            <div class="item-title">Collaboration Skills</div>
-                            <div class="rating">
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                            </div>
-                            <div class="item-description" style="margin-top: 10px;">
-                                "Great team player with excellent communication skills. Always willing to help teammates."
-                            </div>
-                        </div>
-                        <div class="content-item">
-                            <div class="item-title">Code Quality</div>
-                            <div class="rating">
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                            </div>
-                            <div class="item-description" style="margin-top: 10px;">
-                                "Consistently writes clean, maintainable code with great attention to detail."
-                            </div>
-                        </div>
-                    </div>
-                    <div class="content-section">
-                        <div class="section-title">Manager Feedback</div>
-                        <div class="content-item">
-                            <div class="item-title">Overall Performance</div>
-                            <div class="rating">
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star filled">★</span>
-                                <span class="star empty">★</span>
-                            </div>
-                            <div class="item-description" style="margin-top: 10px;">
-                                "Strong technical skills and consistent delivery. Shows great potential for leadership roles."
-                            </div>
-                        </div>
-                    </div>
-                `
+                icon: '⭐',
+                subitems: [
+                    {
+                        id: 'eval-1',
+                        name: 'Peer\nReviews',
+                        details: {
+                            title: 'Peer Reviews',
+                            subtitle: 'Team Feedback',
+                            description: 'Consistently receive positive feedback from colleagues. Known for collaboration, code quality, and willingness to help teammates. Strong communicator and problem solver.',
+                            tags: ['Collaboration', 'Code Quality', 'Communication']
+                        }
+                    },
+                    {
+                        id: 'eval-2',
+                        name: 'Manager\nFeedback',
+                        details: {
+                            title: 'Manager Feedback',
+                            subtitle: 'Performance Evaluation',
+                            description: 'Strong technical skills and consistent delivery. Shows great potential for leadership roles. Proactive in identifying improvements and implementing solutions.',
+                            tags: ['Leadership Potential', 'Technical Excellence', 'Reliability']
+                        }
+                    }
+                ]
             }
         };
+
+        let currentModule = null;
+        let currentSubitem = null;
+        let editingItem = null;
 
         // Initialize modules
         document.addEventListener('DOMContentLoaded', () => {
             const modules = document.querySelectorAll('.module');
             modules.forEach(module => {
                 module.addEventListener('click', () => {
-                    const moduleType = module.dataset.module;
-                    showDetailPage(moduleType);
+                    currentModule = module.dataset.module;
+                    showSubitemsPage(currentModule);
                 });
             });
 
-            const backBtn = document.getElementById('backBtn');
-            backBtn.addEventListener('click', showEntryPage);
+            document.getElementById('backToModulesBtn').addEventListener('click', showEntryPage);
+            document.getElementById('backToSubitemsBtn').addEventListener('click', showSubitemsPage);
+            document.getElementById('closeModalBtn').addEventListener('click', closeModal);
+            document.getElementById('cancelEditBtn').addEventListener('click', closeModal);
+            document.getElementById('editForm').addEventListener('submit', saveEdit);
+
+            // Load data from localStorage
+            loadFromLocalStorage();
         });
 
-        function showDetailPage(moduleType) {
+        function showSubitemsPage(moduleType) {
             const entryPage = document.getElementById('entryPage');
+            const subitemsPage = document.getElementById('subitemsPage');
             const detailPage = document.getElementById('detailPage');
+            const subitemsContainer = document.getElementById('subitemsContainer');
+            
             const data = moduleData[moduleType];
+            const subitems = data.subitems;
 
-            document.getElementById('detailTitle').textContent = data.title;
-            document.getElementById('detailContent').innerHTML = data.content;
+            subitemsContainer.innerHTML = '';
+
+            subitems.forEach((subitem, index) => {
+                const angle = (index / subitems.length) * 360;
+                const radius = 150;
+                const x = Math.cos((angle * Math.PI) / 180) * radius;
+                const y = Math.sin((angle * Math.PI) / 180) * radius;
+
+                const subitemEl = document.createElement('div');
+                subitemEl.className = 'subitem';
+                subitemEl.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+                subitemEl.style.animationDelay = `${index * 0.2}s`;
+                subitemEl.innerHTML = `
+                    <div class="subitem-circle">${subitem.name}</div>
+                `;
+
+                subitemEl.addEventListener('click', () => {
+                    currentSubitem = subitem;
+                    showDetailPage(subitem);
+                });
+
+                subitemsContainer.appendChild(subitemEl);
+            });
 
             entryPage.style.display = 'none';
+            detailPage.classList.remove('active');
+            subitemsPage.classList.add('active');
+        }
+
+        function showDetailPage(subitem) {
+            const subitemsPage = document.getElementById('subitemsPage');
+            const detailPage = document.getElementById('detailPage');
+            const details = subitem.details;
+
+            document.getElementById('detailTitle').textContent = details.title;
+            
+            let contentHTML = `
+                <div class="content-section">
+                    <div class="content-item">
+                        <button class="edit-btn" onclick="openEditModal('${subitem.id}')">Edit</button>
+                        <div class="item-title">${details.title}</div>
+                        <div class="item-subtitle">${details.subtitle}</div>
+                        <div class="item-description">${details.description}</div>
+            `;
+            
+            if (details.tags && details.tags.length > 0) {
+                contentHTML += `
+                        <div class="skill-tags">
+                            ${details.tags.map(tag => `<span class="skill-tag">${tag}</span>`).join('')}
+                        </div>
+                `;
+            }
+
+            contentHTML += `
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('detailContent').innerHTML = contentHTML;
+
+            subitemsPage.classList.remove('active');
             detailPage.classList.add('active');
         }
 
         function showEntryPage() {
             const entryPage = document.getElementById('entryPage');
+            const subitemsPage = document.getElementById('subitemsPage');
             const detailPage = document.getElementById('detailPage');
 
             entryPage.style.display = 'flex';
+            subitemsPage.classList.remove('active');
             detailPage.classList.remove('active');
         }
+
+        function openEditModal(subitemId) {
+            editingItem = findSubitemById(subitemId);
+            
+            if (!editingItem) return;
+
+            document.getElementById('editTitle').value = editingItem.details.title;
+            document.getElementById('editSubtitle').value = editingItem.details.subtitle;
+            document.getElementById('editDescription').value = editingItem.details.description;
+            document.getElementById('editTags').value = editingItem.details.tags.join(', ');
+
+            const modal = document.getElementById('editModal');
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('editModal');
+            modal.classList.remove('active');
+            editingItem = null;
+        }
+
+        function saveEdit(e) {
+            e.preventDefault();
+
+            if (!editingItem) return;
+
+            editingItem.details.title = document.getElementById('editTitle').value;
+            editingItem.details.subtitle = document.getElementById('editSubtitle').value;
+            editingItem.details.description = document.getElementById('editDescription').value;
+            editingItem.details.tags = document.getElementById('editTags').value
+                .split(',')
+                .map(tag => tag.trim())
+                .filter(tag => tag);
+
+            // Refresh detail page
+            if (currentSubitem && currentSubitem.id === editingItem.id) {
+                showDetailPage(editingItem);
+            }
+
+            closeModal();
+            saveToLocalStorage();
+        }
+
+        function findSubitemById(subitemId) {
+            for (const module in moduleData) {
+                const subitems = moduleData[module].subitems;
+                const found = subitems.find(item => item.id === subitemId);
+                if (found) return found;
+            }
+            return null;
+        }
+
+        function saveToLocalStorage() {
+            localStorage.setItem('portfolioData', JSON.stringify(moduleData));
+        }
+
+        function loadFromLocalStorage() {
+            const saved = localStorage.getItem('portfolioData');
+            if (saved) {
+                try {
+                    const loadedData = JSON.parse(saved);
+                    Object.assign(moduleData, loadedData);
+                } catch (e) {
+                    console.error('Error loading portfolio data:', e);
+                }
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('editModal').addEventListener('click', (e) => {
+            if (e.target.id === 'editModal') {
+                closeModal();
+            }
+        });
     </script>
 </body>
 </html>
