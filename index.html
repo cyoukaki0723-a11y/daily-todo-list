@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily To-Do List</title>
+    <title>Personal Portfolio | Interactive Experience</title>
     <style>
         * {
             margin: 0;
@@ -15,1121 +15,814 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 600px;
-            padding: 40px;
-        }
-
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            text-align: center;
-            font-size: 32px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #999;
-            margin-bottom: 30px;
-            font-size: 14px;
-        }
-
-        /* Calendar Styles */
-        .calendar-view {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .calendar-header h2 {
-            color: #333;
-            font-size: 24px;
-            flex: 1;
-            text-align: center;
-        }
-
-        .calendar-nav {
-            display: flex;
-            gap: 10px;
-        }
-
-        .calendar-nav button {
-            padding: 8px 12px;
-            background: #667eea;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .calendar-nav button:hover {
-            background: #764ba2;
-            transform: translateY(-2px);
-        }
-
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .calendar-day-header {
-            text-align: center;
-            font-weight: 600;
-            color: #667eea;
-            padding: 10px;
-            font-size: 12px;
-        }
-
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            background: white;
-            font-size: 13px;
-            padding: 5px;
+        /* Entry Page Styles */
+        .entry-page {
             position: relative;
-        }
-
-        .calendar-day:hover:not(.other-month):not(.disabled) {
-            border-color: #667eea;
-            background: #f8f9fa;
-            transform: translateY(-2px);
-        }
-
-        .calendar-day.other-month {
-            color: #ccc;
-            cursor: default;
-            background: #f8f9fa;
-        }
-
-        .calendar-day.selected {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-color: #667eea;
-        }
-
-        .calendar-day.today {
-            border-color: #27ae60;
-            font-weight: bold;
-        }
-
-        .calendar-day.today.selected {
-            border-color: white;
-        }
-
-        .calendar-day.has-tasks .completion-indicator {
-            position: absolute;
-            bottom: 2px;
-            font-size: 10px;
-        }
-
-        .completion-indicator {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #e74c3c;
-            position: absolute;
-            bottom: 3px;
-            right: 3px;
-        }
-
-        .completion-indicator.partial {
-            background: #f39c12;
-        }
-
-        .completion-indicator.complete {
-            background: #27ae60;
-        }
-
-        .calendar-legend {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin-bottom: 20px;
-            font-size: 13px;
-            flex-wrap: wrap;
-        }
-
-        .legend-item {
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            gap: 5px;
+            justify-content: center;
+            padding: 20px;
+            perspective: 1000px;
         }
 
-        .legend-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-        }
-
-        .input-section {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 30px;
-            flex-wrap: wrap;
-        }
-
-        .input-wrapper {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        input[type="text"] {
+        .modules-container {
+            position: relative;
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            font-size: 14px;
-            transition: border-color 0.3s;
+            max-width: 500px;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        input[type="text"]:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        select {
-            padding: 12px 12px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            background: white;
+        /* Circular Modules */
+        .module {
+            position: absolute;
             cursor: pointer;
-            font-size: 14px;
-            transition: border-color 0.3s;
-            color: #333;
+            transition: all 0.3s ease;
+            animation: float 3s ease-in-out infinite;
         }
 
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        button {
-            padding: 12px 24px;
+        .module-circle {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-            white-space: nowrap;
-        }
-
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(102, 126, 234, 0.4);
-        }
-
-        button:active {
-            transform: translateY(0);
-        }
-
-        .task-list {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-        }
-
-        .task-item {
-            display: flex;
             align-items: center;
-            gap: 12px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            transition: all 0.3s;
-            border-left: 4px solid #999;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .task-item.high {
-            border-left-color: #e74c3c;
-            background: rgba(231, 76, 60, 0.05);
-        }
-
-        .task-item.medium {
-            border-left-color: #f39c12;
-            background: rgba(243, 156, 18, 0.05);
-        }
-
-        .task-item.low {
-            border-left-color: #27ae60;
-            background: rgba(39, 174, 96, 0.05);
-        }
-
-        .task-item.completed {
-            opacity: 0.6;
-        }
-
-        .task-item.completed .task-text {
-            text-decoration: line-through;
-            color: #999;
-        }
-
-        .task-item.readonly {
-            opacity: 0.7;
-        }
-
-        .task-item.readonly input[type="checkbox"],
-        .task-item.readonly .btn-edit,
-        .task-item.readonly .btn-delete {
-            pointer-events: none;
-            opacity: 0.5;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: #667eea;
-        }
-
-        .task-content {
-            flex: 1;
-        }
-
-        .task-text {
-            color: #333;
-            font-size: 15px;
-            margin-bottom: 5px;
-            word-break: break-word;
-        }
-
-        .task-date {
-            font-size: 11px;
-            color: #999;
-            margin-top: 3px;
-        }
-
-        .task-priority {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 4px 8px;
-            border-radius: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .task-priority.high {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .task-priority.medium {
-            background: #f39c12;
-            color: white;
-        }
-
-        .task-priority.low {
-            background: #27ae60;
-            color: white;
-        }
-
-        .task-actions {
-            display: flex;
-            gap: 8px;
-        }
-
-        .btn-edit, .btn-delete {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-
-        .btn-edit {
-            background: #3498db;
-            color: white;
-        }
-
-        .btn-edit:hover {
-            background: #2980b9;
-            transform: translateY(-1px);
-        }
-
-        .btn-delete {
-            background: #e74c3c;
-            color: white;
-        }
-
-        .btn-delete:hover {
-            background: #c0392b;
-            transform: translateY(-1px);
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 40px 20px;
-            color: #999;
-        }
-
-        .empty-state-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
-        }
-
-        .filter-section {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 8px 16px;
-            border: 2px solid #eee;
-            background: white;
-            color: #666;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 13px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .filter-btn.active {
-            background: #667eea;
-            color: white;
-            border-color: #667eea;
-        }
-
-        .filter-btn:hover {
-            border-color: #667eea;
-        }
-
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .stat-item {
-            flex: 1;
-        }
-
-        .stat-number {
-            font-size: 24px;
-            font-weight: bold;
-            color: #667eea;
-        }
-
-        .stat-label {
-            font-size: 12px;
-            color: #999;
-            margin-top: 5px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
+        .module-circle::before {
+            content: '';
+            position: absolute;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            transform: translateX(-100%);
+            animation: shine 3s infinite;
         }
 
-        .modal.active {
-            display: flex;
+        @keyframes shine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
 
-        .modal-content {
+        .module:hover .module-circle {
+            transform: scale(1.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .module-icon {
+            font-size: 40px;
+            margin-bottom: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .module:hover .module-icon {
+            transform: scale(1.2);
+        }
+
+        .module-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: white;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Module Positions (Orbital Layout) */
+        .module:nth-child(1) { animation-delay: 0s; }
+        .module:nth-child(2) { animation-delay: 0.5s; }
+        .module:nth-child(3) { animation-delay: 1s; }
+        .module:nth-child(4) { animation-delay: 1.5s; }
+        .module:nth-child(5) { animation-delay: 2s; }
+        .module:nth-child(6) { animation-delay: 2.5s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        /* Position modules in a circular pattern */
+        .module {
+            width: 140px;
+            height: 140px;
+        }
+
+        .module[data-module="study"] {
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .module[data-module="internship"] {
+            top: 40px;
+            right: -30px;
+        }
+
+        .module[data-module="work"] {
+            bottom: 40px;
+            right: -30px;
+        }
+
+        .module[data-module="skills"] {
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .module[data-module="mbti"] {
+            bottom: 40px;
+            left: -30px;
+        }
+
+        .module[data-module="evaluations"] {
+            top: 40px;
+            left: -30px;
+        }
+
+        /* Center Info Circle */
+        .center-info {
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
             background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 500px;
-        }
-
-        .modal-header {
-            font-size: 20px;
-            font-weight: bold;
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        .modal-input-group {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 10;
+            animation: centerPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes centerPulse {
+            0%, 100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3); }
+            50% { box-shadow: 0 30px 80px rgba(102, 126, 234, 0.4); }
+        }
+
+        .center-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 10px;
+            border: 3px solid #667eea;
+            flex-shrink: 0;
+        }
+
+        .avatar-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .center-name {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 3px;
+        }
+
+        .center-title {
+            font-size: 11px;
+            color: #667eea;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .center-social {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .social-icon {
+            font-size: 8px;
+            padding: 3px 6px;
+            background: #667eea;
+            color: white;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .social-icon:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        /* Detail Page Styles */
+        .detail-page {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .detail-page.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .detail-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-header {
+            display: flex;
+            align-items: center;
             gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+
+        .detail-title {
+            font-size: 28px;
+            color: #333;
+            margin: 0;
+        }
+
+        .detail-content {
+            flex: 1;
+        }
+
+        .content-section {
             margin-bottom: 25px;
         }
 
-        .modal-input-group label {
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .modal-input-group input,
-        .modal-input-group select {
-            padding: 12px 15px;
-            border: 2px solid #eee;
-            border-radius: 8px;
-            font-size: 14px;
-        }
-
-        .modal-input-group input:focus,
-        .modal-input-group select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .modal-actions button {
-            flex: 1;
-            padding: 12px;
-        }
-
-        .modal-actions .btn-cancel {
-            background: #eee;
-            color: #333;
-        }
-
-        .modal-actions .btn-cancel:hover {
-            background: #ddd;
-        }
-
-        .modal-actions .btn-save {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .page-toggle {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-bottom: 20px;
-        }
-
-        .page-toggle button {
-            padding: 10px 20px;
-            font-size: 13px;
-        }
-
-        .page-toggle button.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .page-toggle button.inactive {
-            background: #eee;
-            color: #666;
-        }
-
-        .view-mode {
-            display: none;
-        }
-
-        .view-mode.active {
-            display: block;
-        }
-
-        .date-display {
-            text-align: center;
-            color: #999;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .date-display .selected-date {
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
             color: #667eea;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        .content-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .item-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .item-subtitle {
+            font-size: 12px;
+            color: #667eea;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .item-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .skill-tag {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #667eea;
+            color: white;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 25px;
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .star {
+            font-size: 18px;
+        }
+
+        .star.filled {
+            color: #f39c12;
+        }
+
+        .star.empty {
+            color: #ddd;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .modules-container {
+                height: 500px;
+                max-width: 400px;
             }
 
-            h1 {
+            .module {
+                width: 100px;
+                height: 100px;
+            }
+
+            .module-circle {
+                width: 100px;
+                height: 100px;
+            }
+
+            .module-icon {
+                font-size: 32px;
+                margin-bottom: 3px;
+            }
+
+            .module-label {
+                font-size: 10px;
+            }
+
+            .center-info {
+                width: 150px;
+                height: 150px;
+            }
+
+            .center-avatar {
+                width: 60px;
+                height: 60px;
+            }
+
+            .center-name {
+                font-size: 14px;
+            }
+
+            .detail-container {
+                padding: 20px;
+                min-height: auto;
+            }
+
+            .detail-title {
                 font-size: 24px;
             }
+        }
 
-            .input-section {
-                flex-direction: column;
+        @media (max-width: 480px) {
+            .modules-container {
+                height: 450px;
             }
 
-            .input-wrapper {
-                min-width: 100%;
+            .module {
+                width: 90px;
+                height: 90px;
             }
 
-            .stats {
-                flex-direction: row;
-                gap: 10px;
+            .module-circle {
+                width: 90px;
+                height: 90px;
             }
 
-            .stat-number {
-                font-size: 20px;
+            .module-icon {
+                font-size: 28px;
             }
 
-            .calendar-day {
-                font-size: 11px;
+            .center-info {
+                width: 130px;
+                height: 130px;
             }
 
-            .calendar-header h2 {
-                font-size: 20px;
+            .entry-page {
+                padding: 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>📝 Daily To-Do List</h1>
-        <p class="subtitle">Stay organized and productive</p>
-
-        <!-- Page Toggle -->
-        <div class="page-toggle">
-            <button class="active" onclick="switchView('calendar')">📅 Calendar View</button>
-            <button class="inactive" onclick="switchView('tasks')">✅ Tasks View</button>
-        </div>
-
-        <!-- Calendar View -->
-        <div id="calendarView" class="view-mode active">
-            <div class="calendar-header">
-                <button class="calendar-nav" onclick="previousMonth()">← Prev</button>
-                <h2 id="calendarMonth">January 2026</h2>
-                <button class="calendar-nav" onclick="nextMonth()">Next →</button>
-            </div>
-
-            <div class="calendar-legend">
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #27ae60;"></div>
-                    <span>All Complete</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #f39c12;"></div>
-                    <span>Partially Done</span>
-                </div>
-                <div class="legend-item">
-                    <div class="legend-dot" style="background: #e74c3c;"></div>
-                    <span>No Tasks</span>
+    <!-- Entry Page -->
+    <section class="entry-page" id="entryPage">
+        <div class="modules-container" id="modulesContainer">
+            <div class="module" data-module="study">
+                <div class="module-circle">
+                    <div class="module-icon">📚</div>
+                    <div class="module-label">Study</div>
                 </div>
             </div>
 
-            <div class="calendar-grid" id="calendarGrid"></div>
-
-            <div class="date-display">
-                Selected: <span class="selected-date" id="selectedDateDisplay">Today</span>
-            </div>
-
-            <button style="width: 100%; margin-bottom: 15px;" onclick="switchView('tasks')">View Tasks for Selected Date</button>
-        </div>
-
-        <!-- Tasks View -->
-        <div id="tasksView" class="view-mode">
-            <!-- Stats Section -->
-            <div class="stats">
-                <div class="stat-item">
-                    <div class="stat-number" id="totalTasks">0</div>
-                    <div class="stat-label">Total Tasks</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="completedTasks">0</div>
-                    <div class="stat-label">Completed</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-number" id="remainingTasks">0</div>
-                    <div class="stat-label">Remaining</div>
+            <div class="module" data-module="internship">
+                <div class="module-circle">
+                    <div class="module-icon">💼</div>
+                    <div class="module-label">Internship</div>
                 </div>
             </div>
 
-            <!-- Input Section -->
-            <div class="input-section" id="addTaskSection">
-                <div class="input-wrapper">
-                    <input type="text" id="taskInput" placeholder="Add a new task...">
+            <div class="module" data-module="work">
+                <div class="module-circle">
+                    <div class="module-icon">🏢</div>
+                    <div class="module-label">Work</div>
                 </div>
-                <select id="prioritySelect">
-                    <option value="high">🔴 High</option>
-                    <option value="medium" selected>🟡 Medium</option>
-                    <option value="low">🟢 Low</option>
-                </select>
-                <button onclick="addTask()">Add Task</button>
             </div>
 
-            <!-- Filter Section -->
-            <div class="filter-section">
-                <button class="filter-btn active" onclick="filterTasks('all')">All</button>
-                <button class="filter-btn" onclick="filterTasks('high')">🔴 High</button>
-                <button class="filter-btn" onclick="filterTasks('medium')">🟡 Medium</button>
-                <button class="filter-btn" onclick="filterTasks('low')">🟢 Low</button>
-                <button class="filter-btn" onclick="filterTasks('completed')">✅ Completed</button>
+            <div class="module" data-module="skills">
+                <div class="module-circle">
+                    <div class="module-icon">⚡</div>
+                    <div class="module-label">Skills</div>
+                </div>
             </div>
 
-            <!-- Task List -->
-            <div class="task-list" id="taskList">
-                <div class="empty-state">
-                    <div class="empty-state-icon">📭</div>
-                    <div>No tasks yet. Add one to get started!</div>
+            <div class="module" data-module="mbti">
+                <div class="module-circle">
+                    <div class="module-icon">🧠</div>
+                    <div class="module-label">MBTI</div>
+                </div>
+            </div>
+
+            <div class="module" data-module="evaluations">
+                <div class="module-circle">
+                    <div class="module-icon">⭐</div>
+                    <div class="module-label">Evaluations</div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Edit Modal -->
-    <div class="modal" id="editModal">
-        <div class="modal-content">
-            <div class="modal-header">Edit Task</div>
-            <div class="modal-input-group">
-                <label for="editTaskText">Task Description</label>
-                <input type="text" id="editTaskText">
+        <div class="center-info">
+            <div class="center-avatar">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect fill='%23667eea' width='200' height='200'/%3E%3Ctext x='50%' y='50%' font-size='80' fill='white' text-anchor='middle' dy='.3em'%3E👤%3C/text%3E%3C/svg%3E" alt="Profile Picture" class="avatar-img">
             </div>
-            <div class="modal-input-group">
-                <label for="editPriority">Priority Level</label>
-                <select id="editPriority">
-                    <option value="high">🔴 High</option>
-                    <option value="medium">🟡 Medium</option>
-                    <option value="low">🟢 Low</option>
-                </select>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-cancel" onclick="closeEditModal()">Cancel</button>
-                <button class="btn-save" onclick="saveEdit()">Save Changes</button>
+            <h2 class="center-name">Your Name</h2>
+            <p class="center-title">Full Stack Developer</p>
+            <div class="center-social">
+                <a href="#" class="social-icon">LinkedIn</a>
+                <a href="#" class="social-icon">GitHub</a>
+                <a href="#" class="social-icon">Email</a>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Detail Page -->
+    <section class="detail-page" id="detailPage">
+        <div class="detail-container">
+            <div class="detail-header">
+                <button class="back-btn" id="backBtn">←</button>
+                <h2 class="detail-title" id="detailTitle"></h2>
+            </div>
+            <div class="detail-content" id="detailContent"></div>
+        </div>
+    </section>
 
     <script>
-        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-        let currentFilter = 'all';
-        let editingTaskId = null;
-        let currentMonth = new Date(2026, 0, 1);
-        let selectedDate = new Date();
-        let isReadOnly = false;
-
-        const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
-                           'July', 'August', 'September', 'October', 'November', 'December'];
-
-        // Initialize the app
-        function init() {
-            renderCalendar();
-            renderTasks();
-            updateStats();
-            document.getElementById('taskInput').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    addTask();
-                }
-            });
-        }
-
-        // Switch between views
-        function switchView(view) {
-            document.querySelectorAll('.view-mode').forEach(el => el.classList.remove('active'));
-            document.querySelectorAll('.page-toggle button').forEach(el => {
-                el.classList.remove('active');
-                el.classList.add('inactive');
-            });
-
-            if (view === 'calendar') {
-                document.getElementById('calendarView').classList.add('active');
-                document.querySelector('.page-toggle button:first-child').classList.add('active');
-                document.querySelector('.page-toggle button:first-child').classList.remove('inactive');
-                renderCalendar();
-                isReadOnly = false;
-                document.getElementById('addTaskSection').style.display = 'flex';
-            } else {
-                document.getElementById('tasksView').classList.add('active');
-                document.querySelector('.page-toggle button:last-child').classList.add('active');
-                document.querySelector('.page-toggle button:last-child').classList.remove('inactive');
-                renderTasks();
-                isReadOnly = selectedDate.toDateString() !== new Date().toDateString();
-                if (isReadOnly) {
-                    document.getElementById('addTaskSection').style.display = 'none';
-                } else {
-                    document.getElementById('addTaskSection').style.display = 'flex';
-                }
-            }
-        }
-
-        // Get tasks for a specific date
-        function getTasksForDate(date) {
-            const dateStr = date.toISOString().split('T')[0];
-            return tasks.filter(task => task.date === dateStr);
-        }
-
-        // Format date to YYYY-MM-DD
-        function formatDateKey(date) {
-            const d = new Date(date);
-            const month = String(d.getMonth() + 1).padStart(2, '0');
-            const day = String(d.getDate()).padStart(2, '0');
-            return `${d.getFullYear()}-${month}-${day}`;
-        }
-
-        // Render calendar
-        function renderCalendar() {
-            const year = currentMonth.getFullYear();
-            const month = currentMonth.getMonth();
-
-            // Update header
-            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
-
-            // Get first day and number of days
-            const firstDay = new Date(year, month, 1).getDay();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const daysInPrevMonth = new Date(year, month, 0).getDate();
-
-            const grid = document.getElementById('calendarGrid');
-            grid.innerHTML = '';
-
-            // Add day headers
-            daysOfWeek.forEach(day => {
-                const header = document.createElement('div');
-                header.className = 'calendar-day-header';
-                header.textContent = day;
-                grid.appendChild(header);
-            });
-
-            // Add previous month's days
-            for (let i = firstDay - 1; i >= 0; i--) {
-                const day = daysInPrevMonth - i;
-                const dayEl = createDayElement(day, new Date(year, month - 1, day), true);
-                grid.appendChild(dayEl);
-            }
-
-            // Add current month's days
-            for (let day = 1; day <= daysInMonth; day++) {
-                const dayEl = createDayElement(day, new Date(year, month, day), false);
-                grid.appendChild(dayEl);
-            }
-
-            // Add next month's days
-            const remainingDays = 42 - (firstDay + daysInMonth);
-            for (let day = 1; day <= remainingDays; day++) {
-                const dayEl = createDayElement(day, new Date(year, month + 1, day), true);
-                grid.appendChild(dayEl);
-            }
-        }
-
-        // Create a day element
-        function createDayElement(day, date, isOtherMonth) {
-            const el = document.createElement('div');
-            el.className = 'calendar-day';
-
-            if (isOtherMonth) {
-                el.classList.add('other-month');
-            }
-
-            const dateStr = formatDateKey(date);
-            const today = formatDateKey(new Date());
-
-            if (dateStr === today) {
-                el.classList.add('today');
-            }
-
-            if (dateStr === formatDateKey(selectedDate)) {
-                el.classList.add('selected');
-            }
-
-            // Add completion indicator
-            const dayTasks = getTasksForDate(date);
-            if (dayTasks.length > 0) {
-                el.classList.add('has-tasks');
-                const completed = dayTasks.filter(t => t.completed).length;
-                const indicator = document.createElement('div');
-                indicator.className = 'completion-indicator';
-
-                if (completed === dayTasks.length) {
-                    indicator.classList.add('complete');
-                } else if (completed > 0) {
-                    indicator.classList.add('partial');
-                }
-
-                el.appendChild(indicator);
-            }
-
-            el.textContent = day;
-
-            if (!isOtherMonth) {
-                el.addEventListener('click', () => selectDate(date));
-            }
-
-            return el;
-        }
-
-        // Select a date
-        function selectDate(date) {
-            selectedDate = new Date(date);
-            const dateStr = formatDateKey(selectedDate);
-            const today = formatDateKey(new Date());
-            isReadOnly = dateStr !== today;
-            
-            document.getElementById('selectedDateDisplay').textContent = 
-                selectedDate.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-            
-            renderCalendar();
-            filterTasks('all');
-            renderTasks();
-            updateStats();
-            
-            if (isReadOnly) {
-                document.getElementById('addTaskSection').style.display = 'none';
-            } else {
-                document.getElementById('addTaskSection').style.display = 'flex';
-            }
-        }
-
-        // Navigate months
-        function previousMonth() {
-            currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1);
-            renderCalendar();
-        }
-
-        function nextMonth() {
-            currentMonth = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1);
-            // Limit to 2026
-            if (currentMonth.getFullYear() > 2026) {
-                currentMonth = new Date(2026, 11, 1);
-            }
-            renderCalendar();
-        }
-
-        // Add a new task
-        function addTask() {
-            if (isReadOnly) {
-                alert('Cannot add tasks to past dates');
-                return;
-            }
-
-            const input = document.getElementById('taskInput');
-            const priority = document.getElementById('prioritySelect').value;
-            const text = input.value.trim();
-
-            if (text === '') {
-                alert('Please enter a task description');
-                return;
-            }
-
-            const task = {
-                id: Date.now(),
-                text: text,
-                priority: priority,
-                completed: false,
-                date: formatDateKey(selectedDate),
-                createdAt: new Date().toLocaleString()
-            };
-
-            tasks.push(task);
-            saveTasks();
-            input.value = '';
-            renderCalendar();
-            renderTasks();
-            updateStats();
-        }
-
-        // Delete a task
-        function deleteTask(id) {
-            if (isReadOnly) {
-                alert('Cannot delete tasks from past dates');
-                return;
-            }
-
-            if (confirm('Are you sure you want to delete this task?')) {
-                tasks = tasks.filter(task => task.id !== id);
-                saveTasks();
-                renderCalendar();
-                renderTasks();
-                updateStats();
-            }
-        }
-
-        // Toggle task completion
-        function toggleComplete(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                task.completed = !task.completed;
-                saveTasks();
-                renderCalendar();
-                renderTasks();
-                updateStats();
-            }
-        }
-
-        // Open edit modal
-        function openEditModal(id) {
-            if (isReadOnly) {
-                alert('Cannot edit tasks from past dates');
-                return;
-            }
-
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                editingTaskId = id;
-                document.getElementById('editTaskText').value = task.text;
-                document.getElementById('editPriority').value = task.priority;
-                document.getElementById('editModal').classList.add('active');
-                document.getElementById('editTaskText').focus();
-            }
-        }
-
-        // Close edit modal
-        function closeEditModal() {
-            document.getElementById('editModal').classList.remove('active');
-            editingTaskId = null;
-        }
-
-        // Save edited task
-        function saveEdit() {
-            const text = document.getElementById('editTaskText').value.trim();
-            const priority = document.getElementById('editPriority').value;
-
-            if (text === '') {
-                alert('Please enter a task description');
-                return;
-            }
-
-            const task = tasks.find(t => t.id === editingTaskId);
-            if (task) {
-                task.text = text;
-                task.priority = priority;
-                saveTasks();
-                renderCalendar();
-                renderTasks();
-                updateStats();
-                closeEditModal();
-            }
-        }
-
-        // Filter tasks
-        function filterTasks(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            renderTasks();
-        }
-
-        // Render tasks for selected date
-        function renderTasks() {
-            const taskList = document.getElementById('taskList');
-            let dayTasks = getTasksForDate(selectedDate);
-            let filteredTasks = dayTasks;
-
-            if (currentFilter === 'high') {
-                filteredTasks = dayTasks.filter(t => t.priority === 'high');
-            } else if (currentFilter === 'medium') {
-                filteredTasks = dayTasks.filter(t => t.priority === 'medium');
-            } else if (currentFilter === 'low') {
-                filteredTasks = dayTasks.filter(t => t.priority === 'low');
-            } else if (currentFilter === 'completed') {
-                filteredTasks = dayTasks.filter(t => t.completed);
-            }
-
-            // Sort by completion status and priority
-            const priorityOrder = { high: 0, medium: 1, low: 2 };
-            filteredTasks.sort((a, b) => {
-                if (a.completed !== b.completed) {
-                    return a.completed ? 1 : -1;
-                }
-                return priorityOrder[a.priority] - priorityOrder[b.priority];
-            });
-
-            if (filteredTasks.length === 0) {
-                taskList.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">📭</div>
-                        <div>No tasks ${currentFilter !== 'all' ? 'in this category' : 'for this date'}. ${currentFilter === 'all' && !isReadOnly ? 'Add one to get started!' : ''}</div>
+        // Module content data
+        const moduleData = {
+            study: {
+                title: 'Study Experience',
+                content: `
+                    <div class="content-section">
+                        <div class="section-title">Education</div>
+                        <div class="content-item">
+                            <div class="item-title">Bachelor of Science in Computer Science</div>
+                            <div class="item-subtitle">University Name • 2020 - 2024</div>
+                            <div class="item-description">
+                                Focused on web development, database design, and software engineering. 
+                                GPA: 3.8/4.0
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Relevant Coursework</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Data Structures</span>
+                                <span class="skill-tag">Web Development</span>
+                                <span class="skill-tag">Database Design</span>
+                                <span class="skill-tag">Algorithms</span>
+                                <span class="skill-tag">Machine Learning</span>
+                            </div>
+                        </div>
                     </div>
-                `;
-                return;
-            }
-
-            taskList.innerHTML = filteredTasks.map(task => `
-                <div class="task-item ${task.priority} ${task.completed ? 'completed' : ''} ${isReadOnly ? 'readonly' : ''}">
-                    <input type="checkbox" ${task.completed ? 'checked' : ''} ${isReadOnly ? 'disabled' : ''} onchange="toggleComplete(${task.id})">
-                    <div class="task-content">
-                        <div class="task-text">${escapeHtml(task.text)}</div>
-                        <span class="task-priority ${task.priority}">
-                            ${task.priority === 'high' ? '🔴' : task.priority === 'medium' ? '🟡' : '🟢'} ${task.priority}
-                        </span>
-                        ${isReadOnly ? `<div class="task-date">Created: ${task.createdAt}</div>` : ''}
+                    <div class="content-section">
+                        <div class="section-title">Certifications</div>
+                        <div class="content-item">
+                            <div class="item-title">AWS Certified Cloud Practitioner</div>
+                            <div class="item-subtitle">Amazon Web Services • 2023</div>
+                        </div>
                     </div>
-                    <div class="task-actions">
-                        <button class="btn-edit" onclick="openEditModal(${task.id})" ${isReadOnly ? 'disabled' : ''}>Edit</button>
-                        <button class="btn-delete" onclick="deleteTask(${task.id})" ${isReadOnly ? 'disabled' : ''}>Delete</button>
+                `
+            },
+            internship: {
+                title: 'Internship Experience',
+                content: `
+                    <div class="content-section">
+                        <div class="section-title">Internship History</div>
+                        <div class="content-item">
+                            <div class="item-title">Frontend Development Intern</div>
+                            <div class="item-subtitle">Tech Company Name • Jun 2023 - Aug 2023</div>
+                            <div class="item-description">
+                                Developed and maintained React components, improved UI responsiveness, 
+                                and collaborated with UX designers to implement design specifications.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">CSS</span>
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">Figma</span>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Backend Development Intern</div>
+                            <div class="item-subtitle">Another Company • Jan 2023 - Apr 2023</div>
+                            <div class="item-description">
+                                Built REST APIs, optimized database queries, and implemented authentication 
+                                systems using Node.js and MongoDB.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">Express</span>
+                                <span class="skill-tag">REST API</span>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            `).join('');
-        }
-
-        // Update statistics for selected date
-        function updateStats() {
-            const dayTasks = getTasksForDate(selectedDate);
-            const total = dayTasks.length;
-            const completed = dayTasks.filter(t => t.completed).length;
-            const remaining = total - completed;
-
-            document.getElementById('totalTasks').textContent = total;
-            document.getElementById('completedTasks').textContent = completed;
-            document.getElementById('remainingTasks').textContent = remaining;
-        }
-
-        // Save tasks to localStorage
-        function saveTasks() {
-            localStorage.setItem('tasks', JSON.stringify(tasks));
-        }
-
-        // Escape HTML to prevent XSS
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
-
-        // Close modal when clicking outside
-        document.getElementById('editModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeEditModal();
+                `
+            },
+            work: {
+                title: 'Work Experience',
+                content: `
+                    <div class="content-section">
+                        <div class="section-title">Professional Experience</div>
+                        <div class="content-item">
+                            <div class="item-title">Full Stack Developer</div>
+                            <div class="item-subtitle">Current Company • May 2024 - Present</div>
+                            <div class="item-description">
+                                Leading development of scalable web applications, managing team of 3 developers, 
+                                and improving code quality through code reviews and best practices.
+                            </div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">AWS</span>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Junior Developer</div>
+                            <div class="item-subtitle">Previous Company • Dec 2023 - Apr 2024</div>
+                            <div class="item-description">
+                                Developed frontend features for e-commerce platform, fixed bugs, 
+                                and participated in agile development cycles.
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            skills: {
+                title: 'Outstanding Skills',
+                content: `
+                    <div class="content-section">
+                        <div class="section-title">Technical Skills</div>
+                        <div class="content-item">
+                            <div class="item-title">Frontend Development</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Vue.js</span>
+                                <span class="skill-tag">TypeScript</span>
+                                <span class="skill-tag">CSS/SCSS</span>
+                                <span class="skill-tag">Webpack</span>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Backend Development</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">Python</span>
+                                <span class="skill-tag">PostgreSQL</span>
+                                <span class="skill-tag">MongoDB</span>
+                                <span class="skill-tag">GraphQL</span>
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">DevOps & Tools</div>
+                            <div class="skill-tags">
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">GitHub</span>
+                                <span class="skill-tag">CI/CD</span>
+                                <span class="skill-tag">Linux</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <div class="section-title">Soft Skills</div>
+                        <div class="content-item">
+                            <div class="item-description">
+                                • Team Leadership & Mentoring<br>
+                                • Problem Solving<br>
+                                • Communication<br>
+                                • Project Management<br>
+                                • Continuous Learning
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            mbti: {
+                title: 'MBTI Personality',
+                content: `
+                    <div class="content-section">
+                        <div class="section-title">Personality Type</div>
+                        <div class="content-item">
+                            <div class="item-title">INTJ - The Architect</div>
+                            <div class="item-subtitle">Analytical, Strategic, Independent</div>
+                            <div class="item-description">
+                                INTJs are strategic thinkers who thrive on solving complex problems. 
+                                They are independent, analytical, and focused on long-term goals.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <div class="section-title">Key Characteristics</div>
+                        <div class="content-item">
+                            <div class="item-title">Strengths</div>
+                            <div class="item-description">
+                                • Strategic Planning<br>
+                                • Logical Reasoning<br>
+                                • Independent Thinking<br>
+                                • Self-Improvement Focus<br>
+                                • Long-term Vision
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Growth Areas</div>
+                            <div class="item-description">
+                                • Emotional Expression<br>
+                                • Interpersonal Warmth<br>
+                                • Delegation<br>
+                                • Present Moment Awareness
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <div class="section-title">Work Style</div>
+                        <div class="content-item">
+                            <div class="item-description">
+                                Prefers autonomous work with clear objectives. Values competence and 
+                                intellectual challenges. Best when given independence to execute strategies 
+                                and control over methodologies.
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            evaluations: {
+                title: 'Evaluations & Feedback',
+                content: `
+                    <div class="content-section">
+                        <div class="section-title">Peer Reviews</div>
+                        <div class="content-item">
+                            <div class="item-title">Collaboration Skills</div>
+                            <div class="rating">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                            </div>
+                            <div class="item-description" style="margin-top: 10px;">
+                                "Great team player with excellent communication skills. Always willing to help teammates."
+                            </div>
+                        </div>
+                        <div class="content-item">
+                            <div class="item-title">Code Quality</div>
+                            <div class="rating">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                            </div>
+                            <div class="item-description" style="margin-top: 10px;">
+                                "Consistently writes clean, maintainable code with great attention to detail."
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-section">
+                        <div class="section-title">Manager Feedback</div>
+                        <div class="content-item">
+                            <div class="item-title">Overall Performance</div>
+                            <div class="rating">
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star filled">★</span>
+                                <span class="star empty">★</span>
+                            </div>
+                            <div class="item-description" style="margin-top: 10px;">
+                                "Strong technical skills and consistent delivery. Shows great potential for leadership roles."
+                            </div>
+                        </div>
+                    </div>
+                `
             }
+        };
+
+        // Initialize modules
+        document.addEventListener('DOMContentLoaded', () => {
+            const modules = document.querySelectorAll('.module');
+            modules.forEach(module => {
+                module.addEventListener('click', () => {
+                    const moduleType = module.dataset.module;
+                    showDetailPage(moduleType);
+                });
+            });
+
+            const backBtn = document.getElementById('backBtn');
+            backBtn.addEventListener('click', showEntryPage);
         });
 
-        // Initialize the app when page loads
-        window.addEventListener('load', init);
+        function showDetailPage(moduleType) {
+            const entryPage = document.getElementById('entryPage');
+            const detailPage = document.getElementById('detailPage');
+            const data = moduleData[moduleType];
+
+            document.getElementById('detailTitle').textContent = data.title;
+            document.getElementById('detailContent').innerHTML = data.content;
+
+            entryPage.style.display = 'none';
+            detailPage.classList.add('active');
+        }
+
+        function showEntryPage() {
+            const entryPage = document.getElementById('entryPage');
+            const detailPage = document.getElementById('detailPage');
+
+            entryPage.style.display = 'flex';
+            detailPage.classList.remove('active');
+        }
     </script>
 </body>
 </html>
